@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disuguaglianze tra Giovani – Learning Object Inclusivo</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --primary: #1F77B4;
+            --primary-light: #4A9FD8;
+            --secondary: #FF7F0E;
+            --accent: #2CA02C;
+            --bg: #F5F7FA;
+            --bg-card: #FFFFFF;
+            --text: #1A1A1A;
+            --text-light: #555555;
+            --success: #27AE60;
+            --error: #E74C3C;
+            --info: #3498DB;
+            --border: #E0E0E0;
+            --shadow: 0 4px 20px rgba(31,119,180,0.12);
+            --radius: 12px;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            font-size: 16px;
+        }
+
+        /* ===== ACCESSIBILITY TOOLBAR ===== */
+        #accessibility-bar {
+            background: var(--primary);
+            color: white;
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        #accessibility-bar span { font-size: 13px; font-family: Arial, sans-serif; margin-right: 4px; }
+
+        .acc-btn {
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.5);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: Arial, sans-serif;
+            transition: background 0.2s;
+        }
+
+        .acc-btn:hover, .acc-btn.active { background: var(--secondary); color: var(--text); }
+
+        /* ===== HEADER ===== */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #1A5A96 60%, var(--accent) 100%);
+            color: white;
+            padding: 50px 20px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .header-badge {
+            display: inline-block;
+            background: var(--secondary);
+            color: var(--text);
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-family: Arial, sans-serif;
+            margin-bottom: 16px;
+            font-weight: bold;
+        }
+
+        header h1 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            margin-bottom: 12px;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .header-meta {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            font-family: Arial, sans-serif;
+            opacity: 0.85;
+        }
+
+        .header-meta span { background: rgba(255,255,255,0.15); padding: 4px 12px; border-radius: 20px; }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            background: var(--bg-card);
+            border-bottom: 3px solid var(--secondary);
+            padding: 0 20px;
+            position: sticky;
+            top: 41px;
+            z-index: 999;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        nav ul li a {
+            display: block;
+            padding: 14px 18px;
+            color: var(--text-light);
+            text-decoration: none;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        nav ul li a:hover, nav ul li a.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* ===== MAIN LAYOUT ===== */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px 60px;
+        }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            margin-bottom: 50px;
+            scroll-margin-top: 100px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--secondary);
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+
+        .section-header h2 {
+            font-size: 1.7rem;
+            color: var(--primary);
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: var(--bg-card);
+            border: 1px solid rgba(31,119,180,0.2);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+
+        .card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+
+        .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+
+        /* ===== TOPIC CARDS ===== */
+        .topic-card {
+            background: var(--bg-card);
+            border: 2px solid rgba(31,119,180,0.2);
+            border-radius: var(--radius);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+            box-shadow: var(--shadow);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(31,119,180,0.2);
+            border-color: var(--primary);
+        }
+
+        .topic-card-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .topic-card-header .icon { font-size: 2.5rem; margin-bottom: 8px; }
+        .topic-card-header h3 { font-size: 1.1rem; }
+
+        .topic-card-body { padding: 16px; }
+        .topic-card-body p { font-size: 0.9rem; color: var(--text-light); line-height: 1.6; }
+
+        .topic-detail {
+            display: none;
+            background: #F0F4F8;
+            border: 1px solid var(--secondary);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-top: 10px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .topic-detail.open { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .topic-detail h4 { color: var(--primary); margin-bottom: 10px; }
+        .topic-detail p { font-size: 0.92rem; color: var(--text-light); }
+
+        /* ===== INTERACTIVE ACTIVITIES ===== */
+        .activity {
+            background: var(--bg-card);
+            border: 2px solid var(--accent);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .activity h3 {
+            color: var(--accent);
+            margin-bottom: 16px;
+            font-size: 1.2rem;
+        }
+
+        .drag-drop-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .drag-drop-left, .drag-drop-right {
+            background: #F9F9F9;
+            border: 2px dashed var(--primary);
+            border-radius: var(--radius);
+            padding: 16px;
+            min-height: 300px;
+        }
+
+        .drag-item {
+            background: var(--primary);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            cursor: grab;
+            user-select: none;
+            transition: transform 0.2s;
+        }
+
+        .drag-item:hover { transform: scale(1.05); }
+        .drag-item:active { cursor: grabbing; }
+
+        /* ===== QUIZ ===== */
+        .quiz-container {
+            background: var(--bg-card);
+            border: 2px solid var(--info);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-question {
+            margin-bottom: 24px;
+            padding: 16px;
+            background: #F0F7FF;
+            border-left: 4px solid var(--info);
+            border-radius: 4px;
+        }
+
+        .quiz-question h4 {
+            color: var(--primary);
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+
+        .quiz-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .quiz-option input {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .quiz-option label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .quiz-feedback {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .quiz-feedback.correct {
+            background: #D4EDDA;
+            color: #155724;
+            display: block;
+        }
+
+        .quiz-feedback.incorrect {
+            background: #F8D7DA;
+            color: #721C24;
+            display: block;
+        }
+
+        /* ===== BUTTONS ===== */
+        button, .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            font-family: Arial, sans-serif;
+        }
+
+        button:hover, .btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        button:active, .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background: #E67E0D;
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-success:hover {
+            background: #229954;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            font-size: 14px;
+        }
+
+        footer a {
+            color: var(--secondary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            header h1 { font-size: 1.5rem; }
+            .section-header h2 { font-size: 1.3rem; }
+            .drag-drop-container { grid-template-columns: 1fr; }
+            nav ul { flex-direction: column; }
+            nav ul li a { padding: 10px 14px; font-size: 13px; }
+        }
+
+        /* ===== ACCESSIBILITY MODES ===== */
+        body.dyslexia-mode {
+            font-family: 'Verdana', sans-serif;
+            letter-spacing: 2px;
+            line-height: 2;
+        }
+
+        body.large-text { font-size: 18px; }
+        body.large-text h1 { font-size: 2.5rem; }
+        body.large-text h2 { font-size: 1.9rem; }
+
+        body.high-contrast {
+            background: #000000;
+            color: #FFFFFF;
+        }
+
+        body.high-contrast .card,
+        body.high-contrast .activity,
+        body.high-contrast .quiz-container,
+        body.high-contrast .topic-card-body {
+            background: #1A1A1A;
+            border-color: #FFFFFF;
+        }
+
+        body.high-contrast nav,
+        body.high-contrast header {
+            background: #000000;
+            border-color: #FFFFFF;
+        }
+
+        body.high-contrast .card h3,
+        body.high-contrast .section-header h2,
+        body.high-contrast .activity h3 {
+            color: #FFFF00;
+        }
+    </style>
+</head>
+<body>
+    <!-- ACCESSIBILITY TOOLBAR -->
+    <div id="accessibility-bar">
+        <span>🎨 Accessibilità:</span>
+        <button class="acc-btn" onclick="toggleDyslexia()">Aa Dislessia</button>
+        <button class="acc-btn" onclick="toggleLargeText()">🔍 Testo Grande</button>
+        <button class="acc-btn" onclick="toggleHighContrast()">⚫ Alto Contrasto</button>
+        <button class="acc-btn" onclick="speakPage()">🔊 Leggi</button>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-badge">📚 Educazione Civica - Classe III</div>
+        <h1>🌍 Disuguaglianze tra Giovani</h1>
+        <p>Perché non tutti hanno le stesse opportunità? Un percorso interdisciplinare su diritti, economia, geografia e storia</p>
+        <div class="header-meta">
+            <span>⏱️ 4 ore</span>
+            <span>👥 Classe III Secondaria I Grado</span>
+            <span>🎯 Agenda 2030</span>
+        </div>
+    </header>
+
+    <!-- NAVIGATION -->
+    <nav>
+        <ul>
+            <li><a href="#intro" class="nav-link active" onclick="switchSection('intro')">🏛️ Introduzione</a></li>
+            <li><a href="#diritto" class="nav-link" onclick="switchSection('diritto')">⚖️ Diritto</a></li>
+            <li><a href="#economia" class="nav-link" onclick="switchSection('economia')">💰 Economia</a></li>
+            <li><a href="#geografia" class="nav-link" onclick="switchSection('geografia')">🗺️ Geografia</a></li>
+            <li><a href="#storia" class="nav-link" onclick="switchSection('storia')">📖 Storia</a></li>
+            <li><a href="#attivita" class="nav-link" onclick="switchSection('attivita')">🎮 Attività</a></li>
+            <li><a href="#quiz" class="nav-link" onclick="switchSection('quiz')">📝 Quiz</a></li>
+            <li><a href="#collaborazione" class="nav-link" onclick="switchSection('collaborazione')">🤝 Collaborazione</a></li>
+        </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <!-- INTRODUZIONE -->
+        <section id="intro" class="section">
+            <div class="section-header">
+                <div class="section-icon">🏛️</div>
+                <h2>Introduzione</h2>
+            </div>
+
+            <div class="card">
+                <h3>Benvenuto nel Learning Object!</h3>
+                <p>Questo percorso didattico ti porterà alla scoperta delle <strong>disuguaglianze che colpiscono i giovani nel mondo</strong>. Non si tratta solo di differenze economiche, ma anche di opportunità educative, sociali e generazionali.</p>
+                <p style="margin-top: 16px;"><strong>Domanda centrale:</strong> Perché non tutti i giovani hanno le stesse opportunità? E cosa possiamo fare per cambiar questa situazione?</p>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>🎯 Obiettivi</h3>
+                    <p>✓ Comprendere le cause delle disuguaglianze<br>
+                    ✓ Analizzare i dati economici e sociali<br>
+                    ✓ Collegare il tema con l'Agenda 2030<br>
+                    ✓ Sviluppare spirito critico</p>
+                </div>
+                <div class="card">
+                    <h3>⏱️ Come navigare</h3>
+                    <p>Usa il menu in alto per spostarti tra le sezioni. Puoi seguire l'ordine proposto oppure esplorare liberamente gli argomenti che preferisci. Ogni sezione contiene contenuti, attività e riflessioni.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- DIRITTO -->
+        <section id="diritto" class="section" style="display: none;">
+            <div class="section-header">
+                <div class="section-icon">⚖️</div>
+                <h2>Diritto e Costituzione</h2>
+            </div>
+
+            <div class="card">
+                <h3>Articolo 3 della Costituzione Italiana</h3>
+                <p><strong>"Tutti i cittadini hanno pari dignità sociale e sono eguali davanti alla legge, senza distinzione di sesso, di razza, di lingua, di religione, di opinioni politiche, di condizioni personali e sociali."</strong></p>
+                <p style="margin-top: 12px;">Questo articolo sancisce il principio di <strong>uguaglianza formale</strong>, ma nella realtà molti giovani non hanno le stesse opportunità.</p>
+            </div>
+
+            <div class="card">
+                <h3>Articolo 34 della Costituzione Italiana</h3>
+                <p><strong>"La scuola è aperta a tutti. L'istruzione inferiore, impartita per almeno otto anni, è obbligatoria e gratuita."</strong></p>
+                <p style="margin-top: 12px;">L'articolo garantisce il diritto all'istruzione, ma nel mondo milioni di giovani non possono accedere alla scuola a causa della povertà, della discriminazione di genere o di altre barriere.</p>
+            </div>
+
+            <div class="topic-card" onclick="toggleDetail(this)">
+                <div class="topic-card-header">
+                    <div class="icon">📜</div>
+                    <h3>Diritti Umani Universali</h3>
+                </div>
+                <div class="topic-card-body">
+                    <p>Clicca per approfondire i diritti umani e le convenzioni internazionali</p>
+                </div>
+                <div class="topic-detail">
+                    <h4>Dichiarazione Universale dei Diritti Umani</h4>
+                    <p>La Dichiarazione del 1948 riconosce diritti inalienabili per tutti gli esseri umani, inclusi i giovani. Tuttavia, l'accesso a questi diritti varia significativamente tra i paesi e le comunità.</p>
+                    <p style="margin-top: 12px;"><strong>Convenzione sui Diritti dell'Infanzia:</strong> Protegge i diritti dei minori, incluso il diritto all'istruzione, alla salute e alla protezione dallo sfruttamento.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ECONOMIA -->
+        <section id="economia" class="section" style="display: none;">
+            <div class="section-header">
+                <div class="section-icon">💰</div>
+                <h2>Economia e Disuguaglianze</h2>
+            </div>
+
+            <div class="card">
+                <h3>La Curva di Lorenz</h3>
+                <p>La <strong>Curva di Lorenz</strong> è uno strumento che misura la distribuzione della ricchezza in una società. Più la curva è lontana dalla diagonale, maggiore è la disuguaglianza.</p>
+                <p style="margin-top: 12px;"><strong>Indice di Gini:</strong> Un numero tra 0 e 1 che misura la disuguaglianza. 0 = perfetta uguaglianza; 1 = massima disuguaglianza.</p>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>💵 Disuguaglianze Economiche Globali</h3>
+                    <p>• L'1% più ricco possiede più ricchezza del resto della popolazione<br>
+                    • I giovani nei paesi poveri hanno meno accesso al capitale<br>
+                    • Le donne guadagnano mediamente il 20% meno degli uomini<br>
+                    • La mobilità sociale è limitata</p>
+                </div>
+                <div class="card">
+                    <h3>📊 Dati Significativi</h3>
+                    <p>• 258 milioni di giovani non frequentano la scuola<br>
+                    • Il tasso di disoccupazione giovanile è doppio rispetto agli adulti<br>
+                    • 1 giovane su 5 non lavora né studia (NEET)<br>
+                    • La povertà estrema colpisce 736 milioni di persone</p>
+                </div>
+            </div>
+
+            <div class="topic-card" onclick="toggleDetail(this)">
+                <div class="topic-card-header">
+                    <div class="icon">📈</div>
+                    <h3>Distribuzione della Ricchezza</h3>
+                </div>
+                <div class="topic-card-body">
+                    <p>Clicca per scoprire come la ricchezza è distribuita nel mondo</p>
+                </div>
+                <div class="topic-detail">
+                    <h4>Concentrazione della Ricchezza</h4>
+                    <p>In Italia, il 10% più ricco possiede il 50% della ricchezza totale. Nei paesi in via di sviluppo, questa concentrazione è ancora più marcata.</p>
+                    <p style="margin-top: 12px;"><strong>Cause:</strong> Eredità familiare, accesso differenziato all'istruzione, discriminazione, corruzione, e mancanza di opportunità economiche.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- GEOGRAFIA -->
+        <section id="geografia" class="section" style="display: none;">
+            <div class="section-header">
+                <div class="section-icon">🗺️</div>
+                <h2>Geografia e Sviluppo Globale</h2>
+            </div>
+
+            <div class="card">
+                <h3>Il Divario Nord-Sud</h3>
+                <p>Esiste un divario significativo tra i <strong>paesi sviluppati</strong> (Nord America, Europa, Giappone) e i <strong>paesi in via di sviluppo</strong> (Africa, Asia meridionale, America Latina).</p>
+                <p style="margin-top: 12px;">I giovani nei paesi poveri affrontano sfide maggiori: accesso limitato all'istruzione, opportunità di lavoro scarse, e rischi di sfruttamento.</p>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>🌍 Paesi Sviluppati</h3>
+                    <p>✓ Tasso di scolarizzazione: 95%+<br>
+                    ✓ Accesso a internet: 80%+<br>
+                    ✓ Opportunità di lavoro qualificato<br>
+                    ✓ Sistemi di protezione sociale</p>
+                </div>
+                <div class="card">
+                    <h3>🌏 Paesi in Via di Sviluppo</h3>
+                    <p>✗ Tasso di scolarizzazione: 60-70%<br>
+                    ✗ Accesso a internet: 30-40%<br>
+                    ✗ Lavoro minorile e sfruttamento<br>
+                    ✗ Accesso limitato a servizi sanitari</p>
+                </div>
+            </div>
+
+            <div class="topic-card" onclick="toggleDetail(this)">
+                <div class="topic-card-header">
+                    <div class="icon">📍</div>
+                    <h3>Indice di Sviluppo Umano (HDI)</h3>
+                </div>
+                <div class="topic-card-body">
+                    <p>Clicca per scoprire come si misura lo sviluppo umano</p>
+                </div>
+                <div class="topic-detail">
+                    <h4>L'HDI misura tre dimensioni:</h4>
+                    <p>1. <strong>Salute:</strong> Speranza di vita alla nascita<br>
+                    2. <strong>Istruzione:</strong> Anni di scolarizzazione<br>
+                    3. <strong>Reddito:</strong> PIL pro capite</p>
+                    <p style="margin-top: 12px;">Paesi con HDI alto: Norvegia, Svizzera, Australia. Paesi con HDI basso: Niger, Ciad, Burkina Faso.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- STORIA -->
+        <section id="storia" class="section" style="display: none;">
+            <div class="section-header">
+                <div class="section-icon">📖</div>
+                <h2>Storia e Origini delle Disuguaglianze</h2>
+            </div>
+
+            <div class="card">
+                <h3>La Rivoluzione Industriale (1760-1840)</h3>
+                <p>La Rivoluzione Industriale ha trasformato le società europee, ma ha anche creato nuove forme di disuguaglianza. I giovani erano spesso sfruttati nelle fabbriche con orari lunghi e salari bassi.</p>
+                <p style="margin-top: 12px;"><strong>Conseguenze:</strong> Nascita del movimento operaio, prime leggi sul lavoro minorile, e graduale riconoscimento dei diritti dei lavoratori.</p>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>🏭 Impatto sui Giovani</h3>
+                    <p>• Lavoro minorile nelle fabbriche<br>
+                    • Mancanza di accesso all'istruzione<br>
+                    • Condizioni di lavoro pericolose<br>
+                    • Sfruttamento economico</p>
+                </div>
+                <div class="card">
+                    <h3>⚡ Cambiamenti Sociali</h3>
+                    <p>• Leggi sulla protezione dei minori<br>
+                    • Istruzione obbligatoria<br>
+                    • Diritti sindacali<br>
+                    • Welfare state</p>
+                </div>
+            </div>
+
+            <div class="topic-card" onclick="toggleDetail(this)">
+                <div class="topic-card-header">
+                    <div class="icon">🔗</div>
+                    <h3>Eredità Storica delle Disuguaglianze</h3>
+                </div>
+                <div class="topic-card-body">
+                    <p>Clicca per scoprire come il passato influenza il presente</p>
+                </div>
+                <div class="topic-detail">
+                    <h4>Colonialismo e Imperialismo</h4>
+                    <p>Le potenze europee hanno colonizzato gran parte del mondo, estraendo risorse e sfruttando le popolazioni locali. Questo ha creato disuguaglianze economiche che persistono ancora oggi.</p>
+                    <p style="margin-top: 12px;"><strong>Conseguenze attuali:</strong> Paesi ex-coloniali rimangono più poveri, con meno accesso all'istruzione e alle opportunità economiche.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ATTIVITÀ INTERATTIVE -->
+        <section id="attivita" class="section" style="display: none;">
+            <div class="section-header">
+                <div class="section-icon">🎮</div>
+                <h2>Attività Interattive</h2>
+            </div>
+
+            <div class="activity">
+                <h3>🎯 Attività 1: Abbina Concetti</h3>
+                <p>Abbina i termini economici alle loro definizioni:</p>
+                <div class="drag-drop-container">
+                    <div class="drag-drop-left">
+                        <div class="drag-item" draggable="true">Curva di Lorenz</div>
+                        <div class="drag-item" draggable="true">Indice di Gini</div>
+                        <div class="drag-item" draggable="true">Disuguaglianza</div>
+                        <div class="drag-item" draggable="true">Mobilità Sociale</div>
+                    </div>
+                    <div class="drag-drop-right">
+                        <p><strong>Definizioni:</strong></p>
+                        <p>• Misura numerica della disuguaglianza (0-1)</p>
+                        <p>• Grafico che mostra la distribuzione della ricchezza</p>
+                        <p>• Differenza nelle opportunità e risorse</p>
+                        <p>• Capacità di cambiare posizione sociale</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity">
+                <h3>💭 Attività 2: Analisi di Caso</h3>
+                <p><strong>Scenario:</strong> Due giovani, uno in Italia e uno in un paese africano, hanno 16 anni. Quali differenze nelle loro opportunità puoi immaginare?</p>
+                <textarea style="width: 100%; height: 120px; padding: 12px; border: 2px solid var(--primary); border-radius: 6px; font-family: Arial; font-size: 14px;" placeholder="Scrivi le tue riflessioni..."></textarea>
+                <button class="btn btn-success" style="margin-top: 12px;">💾 Salva Risposta</button>
+            </div>
+
+            <div class="activity">
+                <h3>🗣️ Attività 3: Dibattito Strutturato</h3>
+                <p><strong>Tema:</strong> "La tecnologia può ridurre le disuguaglianze tra i giovani?"</p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px;">
+                    <div style="background: #E8F5E9; padding: 16px; border-radius: 6px;">
+                        <strong style="color: var(--accent);">✓ A FAVORE</strong>
+                        <p style="margin-top: 8px; font-size: 0.9rem;">• Accesso a istruzione online<br>• Opportunità di lavoro remoto<br>• Connessione globale</p>
+                    </div>
+                    <div style="background: #FFEBEE; padding: 16px; border-radius: 6px;">
+                        <strong style="color: var(--error);">✗ CONTRO</strong>
+                        <p style="margin-top: 8px; font-size: 0.9rem;">• Divario digitale<br>• Accesso a internet limitato<br>• Competenze tecniche necessarie</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUIZ -->
+        <section id="quiz" class="section" style="display: none;">
+            <div class="section-header">
+                <div class="section-icon">📝</div>
+                <h2>Quiz di Verifica</h2>
+            </div>
+
+            <div class="quiz-container">
+                <h3>Verifica le tue conoscenze!</h3>
+
+                <div class="quiz-question">
+                    <h4>1. Quale articolo della Costituzione italiana sancisce l'uguaglianza di tutti i cittadini?</h4>
+                    <div class="quiz-option">
+                        <input type="radio" id="q1a" name="q1" value="a">
+                        <label for="q1a">Articolo 1</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="q1b" name="q1" value="b">
+                        <label for="q1b">Articolo 3 ✓</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="q1c" name="q1" value="c">
+                        <label for="q1c">Articolo 34</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="q1d" name="q1" value="d">
+                        <label for="q1d">Articolo 10</label>
+                    </div>
+                    <div class="quiz-feedback" onclick="checkAnswer(this, 'b')"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>2. Cosa misura l'Indice di Gini?</h4>
+                    <div class="quiz-option">
+                        <input type="radio" id="q2a" name="q2" value="a">
+                        <label for="q2a">La crescita economica</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="q2b" name="q2" value="b">
+                        <label for="q2b">La disuguaglianza nella distribuzione della ricchezza ✓</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="q2c" name="q2" value="c">
+                        <label for="q2c">Il tasso di disoccupazione</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="q2d" name="q2" value="d">
+                        <label for="q2d">L'inflazione</label>
+                    </div>
+                    <div class="quiz-feedback" onclick="checkAnswer(this, 'b')"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>3. Quale obiettivo dell'Agenda 2030 è direttamente collegato alle disuguaglianze?</h4>
+                    <div class="quiz-option">
+                        <input type="radio" id="q3a" name="q3" value="a">
+                        <label for="q3a">Obiettivo 1 - Sconfiggere la povertà</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="q3b" name="q3" value="b">
+                        <label for="q3b">Obiettivo 10 - Ridurre le disuguaglianze ✓</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="q3c" name="q3" value="c">
+                        <label for="q3c">Obiettivo 5 - Parità di genere</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="q3d" name="q3" value="d">
+                        <label for="q3d">Obiettivo 8 - Lavoro dignitoso</label>
+                    </div>
+                    <div class="quiz-feedback" onclick="checkAnswer(this, 'b')"></div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>4. In quale periodo storico la Rivoluzione Industriale ha creato nuove forme di disuguaglianza?</h4>
+                    <div class="quiz-option">
+                        <input type="radio" id="q4a" name="q4" value="a">
+                        <label for="q4a">1200-1400</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="q4b" name="q4" value="b">
+                        <label for="q4b">1760-1840 ✓</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="q4c" name="q4" value="c">
+                        <label for="q4c">1900-1950</label>
+                    </div>
+                    <div class="quiz-option">
+                        <input type="radio" id="q4d" name="q4" value="d">
+                        <label for="q4d">1950-2000</label>
+                    </div>
+                    <div class="quiz-feedback" onclick="checkAnswer(this, 'b')"></div>
+                </div>
+
+                <button class="btn btn-success" onclick="submitQuiz()">✅ Verifica Risposte</button>
+                <button class="btn btn-secondary" onclick="resetQuiz()">🔄 Ricomincia</button>
+            </div>
+        </section>
+
+        <!-- COLLABORAZIONE -->
+        <section id="collaborazione" class="section" style="display: none;">
+            <div class="section-header">
+                <div class="section-icon">🤝</div>
+                <h2>Strumenti Collaborativi</h2>
+            </div>
+
+            <div class="card">
+                <h3>Lavora con i tuoi compagni!</h3>
+                <p>Usa questi strumenti per collaborare con i tuoi compagni e approfondire il tema delle disuguaglianze:</p>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <h3>📌 Padlet</h3>
+                    <p>Crea una bacheca collaborativa per raccogliere idee, articoli e riflessioni sulla disuguaglianza.</p>
+                    <a href="https://padlet.com" target="_blank" class="btn" style="display: inline-block; margin-top: 12px;">Accedi a Padlet</a>
+                </div>
+                <div class="card">
+                    <h3>🧠 Coggle</h3>
+                    <p>Crea una mappa mentale collaborativa per visualizzare le cause e le conseguenze delle disuguaglianze.</p>
+                    <a href="https://coggle.it" target="_blank" class="btn" style="display: inline-block; margin-top: 12px;">Accedi a Coggle</a>
+                </div>
+                <div class="card">
+                    <h3>📊 Mentimeter</h3>
+                    <p>Sondaggi interattivi per raccogliere le opinioni della classe su temi legati alle disuguaglianze.</p>
+                    <a href="https://www.mentimeter.com" target="_blank" class="btn" style="display: inline-block; margin-top: 12px;">Accedi a Mentimeter</a>
+                </div>
+                <div class="card">
+                    <h3>📝 Google Docs</h3>
+                    <p>Scrivi e collabora in tempo reale con i tuoi compagni su documenti condivisi.</p>
+                    <a href="https://docs.google.com" target="_blank" class="btn" style="display: inline-block; margin-top: 12px;">Accedi a Google Docs</a>
+                </div>
+                <div class="card">
+                    <h3>🎨 Canva</h3>
+                    <p>Crea infografiche e presentazioni visive sulle disuguaglianze globali.</p>
+                    <a href="https://canva.com" target="_blank" class="btn" style="display: inline-block; margin-top: 12px;">Accedi a Canva</a>
+                </div>
+                <div class="card">
+                    <h3>🎯 Kahoot!</h3>
+                    <p>Gioca a quiz interattivi con i tuoi compagni per consolidare le conoscenze.</p>
+                    <a href="https://kahoot.com" target="_blank" class="btn" style="display: inline-block; margin-top: 12px;">Accedi a Kahoot!</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>📚 Learning Object Inclusivo – Disuguaglianze tra Giovani | Progettato per la Scuola Secondaria di Primo Grado</p>
+        <p style="margin-top: 12px; font-size: 12px;">Collegato con Agenda 2030 – Obiettivi 10, 4 e 8 | <a href="#">Privacy</a> | <a href="#">Contatti</a></p>
+    </footer>
+
+    <script>
+        // Navigation
+        function switchSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+            document.getElementById(sectionId).style.display = 'block';
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            event.target.classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        // Toggle Topic Details
+        function toggleDetail(card) {
+            const detail = card.querySelector('.topic-detail');
+            detail.classList.toggle('open');
+        }
+
+        // Accessibility Features
+        function toggleDyslexia() {
+            document.body.classList.toggle('dyslexia-mode');
+            event.target.classList.toggle('active');
+        }
+
+        function toggleLargeText() {
+            document.body.classList.toggle('large-text');
+            event.target.classList.toggle('active');
+        }
+
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+            event.target.classList.toggle('active');
+        }
+
+        function speakPage() {
+            const text = document.body.innerText;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'it-IT';
+            speechSynthesis.speak(utterance);
+        }
+
+        // Quiz Functions
+        function checkAnswer(element, correct) {
+            const feedback = element;
+            const selected = document.querySelector(`input[name="${element.parentElement.querySelector('input').name}"]:checked`);
+            if (selected && selected.value === correct) {
+                feedback.textContent = '✓ Corretto!';
+                feedback.classList.add('correct');
+            } else {
+                feedback.textContent = '✗ Non corretto. Riprova!';
+                feedback.classList.add('incorrect');
+            }
+        }
+
+        function submitQuiz() {
+            alert('Quiz inviato! Grazie per aver completato la verifica.');
+        }
+
+        function resetQuiz() {
+            document.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+            document.querySelectorAll('.quiz-feedback').forEach(f => {
+                f.classList.remove('correct', 'incorrect');
+                f.textContent = '';
+            });
+        }
+    </script>
+</body>
+</html>
